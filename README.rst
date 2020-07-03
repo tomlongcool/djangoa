@@ -1,7 +1,8 @@
 akaTom
 ======
 
-goodjob
+完成了Quora版块之后的备份
+下一个版块消息聊天
 
 .. image:: https://img.shields.io/badge/built%20with-Cookiecutter%20Django-ff69b4.svg
      :target: https://github.com/pydanny/cookiecutter-django/
