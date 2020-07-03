@@ -1,0 +1,12 @@
+{% load static thumbnail humanize %}
+<ul class="stream">
+    {% for reply in replies %}
+        <li style="list-style:none">
+            {{ reply.content }}
+            <span class="pull-right">--{{ reply.user.get_profile_name }}</span>
+            <br />
+            <p class="timestamp badge badge-danger">{{ reply.updated_at| naturaltime}}</p>
+            <hr />
+        </li>
+    {% endfor %}
+</ul>

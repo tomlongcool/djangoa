@@ -1,0 +1,41 @@
+{% load static thumbnail humanize %}
+
+<li class="news-item" style="list-style:none;" news-id="{{ news.pk }}">
+                <div class="media">
+                    {% thumbnail news.user.avatar "x50" as im %}
+                        <img src="{{ im.url }}" style="border-radius: 50%;" alt="用户头像" class="align-self-start mr-3">
+                        {% empty %}
+                        <img src="{% static 'images/user.png' %}"  style="border-radius: 50%;height:50px" alt="没有头像" class="align-self-start mr-3"/>
+                    {% endthumbnail %}
+                    <div class="media-body">
+                        <h5 class="mt-0">{{ news.user.get_profile_name }}
+                            {% if request.user.username == news.user.username %}
+                            <a href="{% url 'news:delete_news' news.pk %}"><i class="fa fa-trash-o pull-right" aria-hidden="true" title="点击删除这条新闻动态"></i></a>
+                            {% endif %}
+                        </h5>
+                        <p>{{ news.content }}</p>
+                        <div class="interaction">
+                            <a href="#" class="like pull-right"
+                               title="{% for item in news.get_likers %} {{ item.get_profile_name }}&#10{% endfor %}">
+                                {% if request.user in news.get_likers %}
+                                    <i class="heart fa fa-heart" aria-hidden="true"></i>
+                                {% else %}
+                                    <i class="heart fa fa-heart-o" aria-hidden="true"></i>
+                                {% endif %}
+                                <span class="like-count">{{ news.likers.count }}</span>
+                            </a>
+                            <a href="#" class="reply pull-right mr-3" data-toggle="modal" data-target="#replyListModal">
+                                <i class="fa fa-comment-o ml-4" aria-hidden="true"></i>
+                                <span class="reply-count">{{ news.replies_count}}</span>
+                            </a>
+                            <button type="button" class="btn btn-sm btn-success pull-right" data-toggle="modal"
+                                    data-target="#replyFormModal"
+                                    data-who="{{ news.user.username }}"
+                                    data-newsid="{{ news.pk }}">回复
+                            </button>
+                            <span class="timestamp pull-left">{{ news.updated_at| naturaltime}}</span>
+                        </div>
+                    </div>
+                </div>
+            </li>
+<hr/>
